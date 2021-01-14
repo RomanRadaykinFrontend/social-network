@@ -2,7 +2,7 @@ import React from "react";
 import cl from './Profile.module.css';
 import MyPosts from "./MyPosts/MyPosts";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
-import { PostsDataItemType } from "../../Redux/Types";
+import {ActionTypes, PostsDataItemType} from "../../Redux/Types";
 
 
 
@@ -12,11 +12,10 @@ type ProfileType = {
         postsData: Array<PostsDataItemType>
         newPostText: string
     }
-    addPost: () => void
-    updateNewPostText: (newText: string) => void
+    dispatch: (action: ActionTypes) => void
 }
 
-function Profile({profilePage, addPost, updateNewPostText}: ProfileType) {
+function Profile({profilePage, dispatch}: ProfileType) {
 
 
 
@@ -27,8 +26,7 @@ function Profile({profilePage, addPost, updateNewPostText}: ProfileType) {
             <ProfileInfo/>
             <MyPosts postsData={profilePage.postsData}
                      newPostText={profilePage.newPostText}
-                     updateNewPostText={updateNewPostText}
-                     addPost={addPost}/>
+                     dispatch={dispatch}/>
 
         </div>
     )

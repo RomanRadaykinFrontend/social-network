@@ -1,36 +1,37 @@
 import React from "react";
 import cl from './MyPosts.module.css'
 import Post from "../Post/Post";
-import {PostsDataItemType} from "../../../Redux/Types";
+import {ActionTypes, PostsDataItemType} from "../../../Redux/Types";
+import { addPostActionCreator, updateNewPostTextActionCreator } from "../../../Redux/state";
 
 
 type myPostsType = {
     postsData: Array<PostsDataItemType>
     newPostText: string
-    updateNewPostText: (newText: string) => void
-    addPost: () => void
+    dispatch: (action: ActionTypes) => void
 }
 
 
-function MyPosts({postsData, addPost, newPostText, updateNewPostText}: myPostsType) {
+
+function MyPosts({postsData, newPostText, dispatch}: myPostsType) {
 
     let postsElements: Array<JSX.Element> = postsData.map(item => <Post message={item.message}
                                                                         likesCount={item.likesCount}/>);
 
-    const newPostElementRef = React.createRef<HTMLTextAreaElement>()
+    const newPostElementRef = React.createRef<HTMLTextAreaElement>();
 
     const addPostCallback = () => {
         if (newPostElementRef.current) {
-            addPost()
-            updateNewPostText('')
+            dispatch(addPostActionCreator());
+            dispatch(updateNewPostTextActionCreator(''))
         }
-    }
+    };
 
     let onPostChange = () => {
         if (newPostElementRef.current) {
-            updateNewPostText(newPostElementRef.current.value)
+            dispatch(updateNewPostTextActionCreator(newPostElementRef.current.value))
         }
-    }
+    };
 
 
     return (

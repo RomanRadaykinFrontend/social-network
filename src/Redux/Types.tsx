@@ -21,3 +21,22 @@ export type MessagesDataItemType = {
     id: string
     message: string
 }
+
+export type StoreType = {
+    _state: StateType
+    _callSubscriber: () => void
+    subscribe: (observer: () => void) => void
+    getState: () => StateType
+    dispatch: (action: AddPostActionType | UpdateNewPostTextType) => void
+}
+
+export type ActionTypes = AddPostActionType | UpdateNewPostTextType
+
+type AddPostActionType = {
+    type: 'ADD-POST',
+}
+
+type UpdateNewPostTextType = {
+    type: 'UPDATE-NEW-POST-TEXT',
+    newText: string
+}
