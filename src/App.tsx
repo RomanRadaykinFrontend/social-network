@@ -22,7 +22,7 @@ function App({state, dispatch}: AppType) {
                 <Header/>
                 <Navbar/>
                 <div className={cl.appWrapperContent}>
-                    <Route path='/dialogs' render={() => <Dialogs state={state.dialogsPage}/>}/>
+                    <Route path='/dialogs' render={() => <Dialogs state={state.dialogsPage} dispatch={dispatch}/>}/>
                     <Route path='/profile' render={() => <Profile profilePage={state.profilePage}
                                                                   dispatch={dispatch}/>}/>
 
