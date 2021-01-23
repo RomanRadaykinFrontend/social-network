@@ -2,31 +2,24 @@ import React from "react";
 import cl from './Profile.module.css';
 import MyPosts from "./MyPosts/MyPosts";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
-import {ActionTypes, PostsDataItemType} from "../../Redux/Types";
+import {ActionTypes, PostsDataItemType, StateType} from "../../Redux/Types";
+import MyPostsContainer from "./MyPosts/MyPostsContainer";
+import store, {RootStoreType} from "../../Redux/redux-store";
 
 
 
 
-type ProfileType = {
-    profilePage:{
-        postsData: Array<PostsDataItemType>
-        newPostText: string
-    }
-    dispatch: (action: ActionTypes) => void
-}
+/*type ProfileType = {
+    store: RootStoreType
+}*/
 
-function Profile({profilePage, dispatch}: ProfileType) {
-
-
-
+function Profile() {
 
     return (
         <div className={cl.content}>
 
             <ProfileInfo/>
-            <MyPosts postsData={profilePage.postsData}
-                     newPostText={profilePage.newPostText}
-                     dispatch={dispatch}/>
+            <MyPostsContainer />
 
         </div>
     )

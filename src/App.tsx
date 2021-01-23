@@ -6,32 +6,27 @@ import Profile from "./Components/Profile/Profile";
 import Dialogs from "./Components/Dialogs/Dialogs";
 import {BrowserRouter, Route} from "react-router-dom";
 import {ActionTypes, StateType} from './Redux/Types';
+import DialogsContainer from "./Components/Dialogs/DialogsContainer";
+import {RootStoreType} from "./Redux/redux-store";
 
 
-type AppType = {
-    state: StateType
-    dispatch: (action: ActionTypes) => void
-}
+/*type AppType = {
+    store: RootStoreType
+}*/
 
-function App({state, dispatch}: AppType) {
+function App() {
 
     return (
-
-        <BrowserRouter>
-            <div className={cl.appWrapper}>
-                <Header/>
-                <Navbar/>
-                <div className={cl.appWrapperContent}>
-                    <Route path='/dialogs' render={() => <Dialogs state={state.dialogsPage} dispatch={dispatch}/>}/>
-                    <Route path='/profile' render={() => <Profile profilePage={state.profilePage}
-                                                                  dispatch={dispatch}/>}/>
-
-                </div>
+        <div className={cl.appWrapper}>
+            <Header/>
+            <Navbar/>
+            <div className={cl.appWrapperContent}>
+                <Route path='/dialogs' render={() => <DialogsContainer/>}/>
+                <Route path='/profile' render={() => <Profile />}/>
 
             </div>
 
-        </BrowserRouter>
-
+        </div>
     )
 }
 

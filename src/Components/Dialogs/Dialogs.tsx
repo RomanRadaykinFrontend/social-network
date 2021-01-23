@@ -2,31 +2,30 @@ import React, {ChangeEvent} from 'react';
 import cl from './Dialogs.module.css';
 import DialogItem from "./DialogItem/DialogItem";
 import MessageItem from "./MessageItem/MessageItem";
-import {ActionTypes, DialogsDataItemType, MessagesDataItemType} from '../../Redux/Types';
-import {sendMessageActionCreator, updateNewMessageBodyActionCreator} from "../../Redux/dialogs-reducer";
+import {DialogsPageType} from '../../Redux/Types';
+
 
 
 
 type DialogsType = {
-    state: {
-        dialogsData: Array<DialogsDataItemType>
-        messagesData: Array<MessagesDataItemType>
-        newMessageBody: string
-    }
-    dispatch: (action: ActionTypes) => void
+
+    state: DialogsPageType
+    onSendMessageClick: () => void
+    onNewMessageChange: (text: string) => void
+
 }
 
-function Dialogs({state, dispatch}: DialogsType) {
+function Dialogs(props: DialogsType) {
 
 
-    let dialogsElements: Array<JSX.Element> = state.dialogsData.map(item => <DialogItem name={item.name} id={item.id}/>)
-    let messagesElements: Array<JSX.Element> = state.messagesData.map(item => <MessageItem message={item.message}/>)
+    let dialogsElements: Array<JSX.Element> = props.state.dialogsData.map(item => <DialogItem name={item.name} id={item.id}/>)
+    let messagesElements: Array<JSX.Element> = props.state.messagesData.map(item => <MessageItem message={item.message}/>)
 
-    let onSendMessageClick = () => {
-        dispatch(sendMessageActionCreator())
+    let onSendMessageClickCallback = () => {
+        props.onSendMessageClick()
     }
-    let onNewMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        dispatch(updateNewMessageBodyActionCreator(e.currentTarget.value))
+    let onNewMessageChangeCallback = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        props.onNewMessageChange(e.currentTarget.value)
     }
 
     return (
@@ -44,10 +43,10 @@ function Dialogs({state, dispatch}: DialogsType) {
                 <div>{messagesElements}</div>
                 <div>
                     <div>
-                        <textarea value={state.newMessageBody} onChange={onNewMessageChange} placeholder='Enter your message'/>
+                        <textarea value={props.state.newMessageBody} onChange={onNewMessageChangeCallback} placeholder='Enter your message'/>
                     </div>
                     <div>
-                        <button onClick={onSendMessageClick}>Send</button>
+                        <button onClick={onSendMessageClickCallback}>Send</button>
                     </div>
                 </div>
   

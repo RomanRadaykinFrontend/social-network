@@ -9,28 +9,28 @@ import {addPostActionCreator, updateNewPostTextActionCreator} from "../../../Red
 type myPostsType = {
     postsData: Array<PostsDataItemType>
     newPostText: string
-    dispatch: (action: ActionTypes) => void
+    updateNewPostText: (text: string) => void
+    addPost: () => void
 }
 
 
 
-function MyPosts({postsData, newPostText, dispatch}: myPostsType) {
+function MyPosts(props: myPostsType) {
 
-    let postsElements: Array<JSX.Element> = postsData.map(item => <Post message={item.message}
+    let postsElements: Array<JSX.Element> = props.postsData.map(item => <Post message={item.message}
                                                                         likesCount={item.likesCount}/>);
 
     const newPostElementRef = React.createRef<HTMLTextAreaElement>();
 
     const addPostCallback = () => {
         if (newPostElementRef.current) {
-            dispatch(addPostActionCreator());
-            dispatch(updateNewPostTextActionCreator(''))
+            props.addPost()
         }
     };
 
-    let onPostChange = () => {
+    let updateNewPostTextCallback = () => {
         if (newPostElementRef.current) {
-            dispatch(updateNewPostTextActionCreator(newPostElementRef.current.value))
+            props.updateNewPostText(newPostElementRef.current.value)
         }
     };
 
@@ -40,8 +40,8 @@ function MyPosts({postsData, newPostText, dispatch}: myPostsType) {
             <h2>My posts:</h2>
             <div>
                 <textarea ref={newPostElementRef}
-                          onChange={onPostChange}
-                          value={newPostText}/>
+                          onChange={updateNewPostTextCallback}
+                          value={props.newPostText}/>
                 <button onClick={addPostCallback}>Add post</button>
                 <button>Remove post</button>
             </div>

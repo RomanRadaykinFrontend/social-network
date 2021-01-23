@@ -38,24 +38,24 @@ export type StoreType = {
 }
 
 export type ActionTypes = AddPostActionType
-    | UpdateNewPostTextType
-    | UpdateNewMessageBodyType
-    | SendMessageType
+    | UpdateNewPostTextACType
+    | UpdateNewMessageBodyACType
+    | SendMessageACType
 
 type AddPostActionType = {
     type: 'ADD-POST'
 }
 
-type UpdateNewMessageBodyType = {
+type UpdateNewMessageBodyACType = {
     type: 'UPDATE_NEW_MESSAGE_BODY'
     body: string
 }
 
-type UpdateNewPostTextType = {
+type UpdateNewPostTextACType = {
     type: 'UPDATE-NEW-POST-TEXT',
     newText: string
 }
 
-type SendMessageType = {
+type SendMessageACType = {
     type: 'SEND_MESSAGE'
 }
