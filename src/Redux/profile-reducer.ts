@@ -19,19 +19,24 @@ const profileReducer = (state: ProfilePageType = initialState, action: ActionTyp
                 message: state.newPostText,
                 likesCount: 0
             };
-            state.postsData.push(newPost);
-            return state;
+            return {
+                ...state,
+                postsData: [...state.postsData, newPost],
+                newPostText: ''
+            }
         case UPDATE_NEW_POST_TEXT:
-            state.newPostText = action.newText;
-            return state;
+            return {
+                ...state,
+                newPostText: action.newText
+            }
         default:
             return state
     }
 };
 
-export const addPostActionCreator = (): ActionTypes  => ({type: ADD_POST});
+export const addPostActionCreator = (): ActionTypes => ({type: ADD_POST});
 
-export const updateNewPostTextActionCreator = (text: string): ActionTypes  =>
+export const updateNewPostTextActionCreator = (text: string): ActionTypes =>
     ({type: UPDATE_NEW_POST_TEXT, newText: text});
 
 export default profileReducer

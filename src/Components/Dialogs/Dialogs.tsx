@@ -8,18 +8,16 @@ import {DialogsPageType} from '../../Redux/Types';
 
 
 type DialogsType = {
-
-    state: DialogsPageType
+    dialogsPage: DialogsPageType
     onSendMessageClick: () => void
     onNewMessageChange: (text: string) => void
-
 }
 
 function Dialogs(props: DialogsType) {
 
 
-    let dialogsElements: Array<JSX.Element> = props.state.dialogsData.map(item => <DialogItem name={item.name} id={item.id}/>)
-    let messagesElements: Array<JSX.Element> = props.state.messagesData.map(item => <MessageItem message={item.message}/>)
+    let dialogsElements: Array<JSX.Element> = props.dialogsPage.dialogsData.map(item => <DialogItem key={item.id} name={item.name} id={item.id}/>)
+    let messagesElements: Array<JSX.Element> = props.dialogsPage.messagesData.map(item => <MessageItem key={item.id} message={item.message}/>)
 
     let onSendMessageClickCallback = () => {
         props.onSendMessageClick()
@@ -43,7 +41,7 @@ function Dialogs(props: DialogsType) {
                 <div>{messagesElements}</div>
                 <div>
                     <div>
-                        <textarea value={props.state.newMessageBody} onChange={onNewMessageChangeCallback} placeholder='Enter your message'/>
+                        <textarea value={props.dialogsPage.newMessageBody} onChange={onNewMessageChangeCallback} placeholder='Enter your message'/>
                     </div>
                     <div>
                         <button onClick={onSendMessageClickCallback}>Send</button>

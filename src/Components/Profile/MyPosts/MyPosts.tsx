@@ -1,9 +1,7 @@
 import React from "react";
 import cl from './MyPosts.module.css'
 import Post from "../Post/Post";
-import {ActionTypes, PostsDataItemType} from "../../../Redux/Types";
-import {addPostActionCreator, updateNewPostTextActionCreator} from "../../../Redux/profile-reducer";
-
+import {PostsDataItemType} from "../../../Redux/Types";
 
 
 type myPostsType = {
@@ -14,11 +12,11 @@ type myPostsType = {
 }
 
 
-
 function MyPosts(props: myPostsType) {
 
     let postsElements: Array<JSX.Element> = props.postsData.map(item => <Post message={item.message}
-                                                                        likesCount={item.likesCount}/>);
+                                                                              key={item.id}
+                                                                              likesCount={item.likesCount}/>);
 
     const newPostElementRef = React.createRef<HTMLTextAreaElement>();
 

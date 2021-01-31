@@ -1,7 +1,8 @@
 import {ActionTypes, StoreType} from "./Types";
 import profileReducer from "./profile-reducer";
-import dialogsReducer from "./dialogs-reducer";
 import sidebarReducer from "./sidebar-reducer";
+import dialogsReducer from "./dialog-reducer";
+
 
 const store: StoreType = {
     _state: {

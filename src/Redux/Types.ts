@@ -15,6 +15,22 @@ export type DialogsPageType = {
     newMessageBody: string
 }
 
+export type UsersPageType = {
+    users: Array<UserDataItemType>
+}
+
+export type UserDataItemType = {
+    id: string
+    photo: string
+    followed: boolean
+    fullName: string
+    status: string
+    location: {
+        city: string
+        country: string
+    }
+}
+
 export type PostsDataItemType = {
     id: string
     message: string
@@ -41,9 +57,27 @@ export type ActionTypes = AddPostActionType
     | UpdateNewPostTextACType
     | UpdateNewMessageBodyACType
     | SendMessageACType
+    | followActionType
+    | unFollowAddPostActionType
+    | setUsersActionType
 
 type AddPostActionType = {
     type: 'ADD-POST'
+}
+
+type followActionType = {
+    type: 'FOLLOW'
+    id: string
+}
+
+type unFollowAddPostActionType = {
+    type: 'UNFOLLOW'
+    id: string
+}
+
+type setUsersActionType = {
+    type: 'SET_USERS'
+    users: [] | Array<UserDataItemType>
 }
 
 type UpdateNewMessageBodyACType = {

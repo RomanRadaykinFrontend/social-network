@@ -3,11 +3,9 @@ import cl from './App.module.css';
 import Header from "./Components/Header/Header";
 import Navbar from "./Components/Navbar/Navbar";
 import Profile from "./Components/Profile/Profile";
-import Dialogs from "./Components/Dialogs/Dialogs";
-import {BrowserRouter, Route} from "react-router-dom";
-import {ActionTypes, StateType} from './Redux/Types';
+import {Route} from "react-router-dom";
 import DialogsContainer from "./Components/Dialogs/DialogsContainer";
-import {RootStoreType} from "./Redux/redux-store";
+import UsersContainer from "./Components/Users/UsersContainer";
 
 
 /*type AppType = {
@@ -15,14 +13,15 @@ import {RootStoreType} from "./Redux/redux-store";
 }*/
 
 function App() {
-
     return (
+
         <div className={cl.appWrapper}>
             <Header/>
             <Navbar/>
             <div className={cl.appWrapperContent}>
-                <Route path='/dialogs' render={() => <DialogsContainer/>}/>
+                <Route path='/dialogs' render={() => <DialogsContainer/> }/>
                 <Route path='/profile' render={() => <Profile />}/>
+                <Route path='/users' render={() => <UsersContainer/>}/>
 
             </div>
 
