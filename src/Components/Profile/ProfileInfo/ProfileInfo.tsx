@@ -1,8 +1,18 @@
 import React from "react";
 import cl from './ProfileInfo.module.css';
+import {ProfileDataItemAPIType} from "../../../Redux/Types";
+import Preloader from "../../Common/Preloader/Preloader";
 
+type ProfileInfoType = {
+    profile: ProfileDataItemAPIType
+}
 
-function ProfileInfo() {
+function ProfileInfo(props: ProfileInfoType) {
+
+    if(props.profile.profileDataIsLoaded){
+       return <Preloader/>
+    }
+
     return (
         <div>
 
@@ -12,6 +22,7 @@ function ProfileInfo() {
             </div>
 
             <div>
+                <img src={props.profile.photos.large}/>
                 ava+descr
             </div>
 

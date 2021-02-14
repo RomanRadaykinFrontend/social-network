@@ -3,14 +3,15 @@ import cl from './Dialogs.module.css';
 import DialogItem from "./DialogItem/DialogItem";
 import MessageItem from "./MessageItem/MessageItem";
 import {DialogsPageType} from '../../Redux/Types';
+import {sendMessage, updateNewMessageBody} from "../../Redux/dialog-reducer";
 
 
 
 
 type DialogsType = {
     dialogsPage: DialogsPageType
-    onSendMessageClick: () => void
-    onNewMessageChange: (text: string) => void
+    sendMessage: () => void
+    updateNewMessageBody: (text: string) => void
 }
 
 function Dialogs(props: DialogsType) {
@@ -20,10 +21,10 @@ function Dialogs(props: DialogsType) {
     let messagesElements: Array<JSX.Element> = props.dialogsPage.messagesData.map(item => <MessageItem key={item.id} message={item.message}/>)
 
     let onSendMessageClickCallback = () => {
-        props.onSendMessageClick()
+        props.sendMessage()
     }
     let onNewMessageChangeCallback = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.onNewMessageChange(e.currentTarget.value)
+        props.updateNewMessageBody(e.currentTarget.value)
     }
 
     return (
