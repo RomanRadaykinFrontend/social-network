@@ -1,7 +1,23 @@
-import {ActionTypes, DialogsPageType} from "./Types";
+import {ActionTypes} from "./ActionTypes";
 
 const UPDATE_NEW_MESSAGE_BODY = "UPDATE_NEW_MESSAGE_BODY";
 const SEND_MESSAGE = "SEND_MESSAGE";
+
+export type DialogsDataItemType = {
+    id: string
+    name: string
+}
+
+export type MessagesDataItemType = {
+    id: string
+    message: string
+}
+
+export type DialogsPageType = {
+    dialogsData: Array<DialogsDataItemType>
+    messagesData: Array<MessagesDataItemType>
+    newMessageBody: string
+}
 
 let initialState: DialogsPageType = {
     dialogsData: [

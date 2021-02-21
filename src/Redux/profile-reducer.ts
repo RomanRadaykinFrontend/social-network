@@ -1,8 +1,41 @@
-import {ActionTypes, PostsDataItemType, ProfileDataItemAPIType, ProfilePageType} from "./Types";
+import {ActionTypes} from "./ActionTypes";
 
 const ADD_POST = 'ADD-POST';
 const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
 const SET_USER_PROFILE = "SET_USER_PROFILE";
+
+export type ProfileDataItemAPIType = {
+    aboutMe: string
+    contacts: {
+        github: string
+        vk: string
+        facebook: string
+        instagram: string
+        twitter: string
+        website: string
+        youtube: string
+        mainLink: string
+    }
+    lookingForAJob: boolean
+    lookingForAJobDescription: string
+    fullName: string
+    userId: number | undefined
+    photos: {
+        small: string
+        large: string
+    }
+    profileDataIsLoaded?: boolean
+}
+export type PostsDataItemType = {
+    id: string
+    message: string
+    likesCount: number
+}
+export type ProfilePageType = {
+    postsData: Array<PostsDataItemType>
+    newPostText: string
+    profile: ProfileDataItemAPIType
+}
 
 let initialState: ProfilePageType = {
     postsData: [

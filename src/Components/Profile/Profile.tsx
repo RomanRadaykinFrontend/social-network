@@ -1,10 +1,8 @@
 import React from "react";
-import cl from './Profile.module.css';
-import MyPosts from "./MyPosts/MyPosts";
+import style from './Profile.module.css';
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
-import {ActionTypes, PostsDataItemType, ProfileDataItemAPIType, StateType} from "../../Redux/Types";
 import MyPostsContainer from "./MyPosts/MyPostsContainer";
-import store, {RootStoreType} from "../../Redux/redux-store";
+import { ProfileDataItemAPIType } from "../../Redux/profile-reducer";
 
 type ProfileType = {
     profile: ProfileDataItemAPIType
@@ -16,7 +14,7 @@ function Profile(props: ProfileType) {
 
 
     return (
-        <div className={cl.content}>
+        <div className={style.content}>
 
             <ProfileInfo profile = {props.profile}/>
             <MyPostsContainer />

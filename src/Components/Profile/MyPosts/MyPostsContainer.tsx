@@ -1,9 +1,9 @@
 import React from "react";
-import cl from './MyPosts.module.css'
-import {addPost, updateNewPostText} from "../../../Redux/profile-reducer";
+import style from './MyPosts.module.css'
+import {addPost, PostsDataItemType, updateNewPostText} from "../../../Redux/profile-reducer";
 import MyPosts from "./MyPosts";
 import { connect } from "react-redux";
-import {ActionTypes, PostsDataItemType, StateType} from "../../../Redux/Types";
+import {ActionTypes} from "../../../Redux/ActionTypes";
 import {RootStateType} from "../../../Redux/redux-store";
 
 

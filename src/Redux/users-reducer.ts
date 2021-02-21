@@ -1,18 +1,45 @@
-import {ActionTypes, UserDataItemAPIType, UsersPageType} from "./Types";
+import {ActionTypes} from "./ActionTypes";
 
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET_USERS';
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 const SET_TOTAL_COUNT = 'SET_TOTAL_COUNT';
-const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING'
+const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING';
+const TOGGLE_IS_FOLLOWING_PROGRESS = 'TOGGLE_IS_FOLLOWING_PROGRESS';
+
+export  type UserDataItemAPIType = {
+    id: string
+    photos: {
+        small: string
+        large: string
+    }
+    followed: boolean
+    name: string
+    status: string
+    location: {
+        city: string
+        country: string
+    }
+}
+
+export type UsersPageType = {
+    users: Array<UserDataItemAPIType>
+    pageSize: number
+    totalUserCount: number
+    currentPage: number
+    isFetching: boolean
+    followingInProgress: [] | Array<string>
+}
+
 
 let initialState: UsersPageType = {
     users: [],
     pageSize: 5,
     totalUserCount: 100,
     currentPage: 1,
-    isFetching: false
+    isFetching: false,
+    followingInProgress: []
 }
 
 const userReducer = (state: UsersPageType = initialState, action: ActionTypes) => {
@@ -22,7 +49,7 @@ const userReducer = (state: UsersPageType = initialState, action: ActionTypes) =
                 ...state,
                 users: state.users.map(item => {
                     if (item.id === action.id) {
-                        return {...item, followed: false}
+                        return {...item, followed: true}
                     }
                     return item
                 })
@@ -32,7 +59,7 @@ const userReducer = (state: UsersPageType = initialState, action: ActionTypes) =
                 ...state,
                 users: state.users.map(item => {
                     if (item.id === action.id) {
-                        return {...item, followed: true}
+                        return {...item, followed: false}
                     }
                     return item
                 })
@@ -43,8 +70,16 @@ const userReducer = (state: UsersPageType = initialState, action: ActionTypes) =
             return {...state, currentPage: action.currentPage}
         case SET_TOTAL_COUNT:
             return {...state, totalUserCount: action.totalCount}
-            case TOGGLE_IS_FETCHING:
+        case TOGGLE_IS_FETCHING:
             return {...state, isFetching: action.isFetching}
+        case TOGGLE_IS_FOLLOWING_PROGRESS:
+            return {
+                ...state,
+                followingInProgress: action.isFetching
+                    ? [...state.followingInProgress, action.userId]
+                    : state.followingInProgress.filter(id => id !== action.userId)
+            }
+
         default:
             return state
     }
@@ -67,6 +102,10 @@ export const setTotalCount = (totalCount: number): ActionTypes => ({
 export const toggleIsFetching = (isFetching: boolean): ActionTypes => ({
     type: TOGGLE_IS_FETCHING,
     isFetching: isFetching
+});
+export const toggleIsFollowingProgress = (isFetching: boolean, userId: string): ActionTypes => ({
+    type: TOGGLE_IS_FOLLOWING_PROGRESS,
+    isFetching, userId
 });
 
 

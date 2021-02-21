@@ -1,7 +1,7 @@
 import React from "react";
 import cl from './ProfileInfo.module.css';
-import {ProfileDataItemAPIType} from "../../../Redux/Types";
 import Preloader from "../../Common/Preloader/Preloader";
+import { ProfileDataItemAPIType } from "../../../Redux/profile-reducer";
 
 type ProfileInfoType = {
     profile: ProfileDataItemAPIType
