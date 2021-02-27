@@ -6,7 +6,7 @@ import { ProfileDataItemAPIType } from "../../Redux/profile-reducer";
 
 type ProfileType = {
     profile: ProfileDataItemAPIType
-    setUserProfile: (profile: ProfileDataItemAPIType) => void
+    getUserProfile: (userId: string) => void
 }
 
 

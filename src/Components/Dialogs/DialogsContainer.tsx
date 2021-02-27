@@ -8,6 +8,7 @@ import {DialogsPageType, sendMessage, updateNewMessageBody} from '../../Redux/di
 
 type MapStateToPropsType = {
     dialogsPage: DialogsPageType
+    isAuth: boolean | null
 }
 
 type MapDispatchToPropsType = {
@@ -17,7 +18,8 @@ type MapDispatchToPropsType = {
 
 let mapStateToProps = (state: RootStateType) : MapStateToPropsType  => {
     return {
-        dialogsPage: state.dialogsPage
+        dialogsPage: state.dialogsPage,
+        isAuth: state.auth.isAuth
     }
 };
 
