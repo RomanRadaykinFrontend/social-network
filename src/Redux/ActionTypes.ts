@@ -2,8 +2,6 @@ import {ProfileDataItemAPIType} from "./profile-reducer"
 import {UserDataItemAPIType} from "./users-reducer"
 
 export type ActionTypes = AddPostACType
-    | UpdateNewPostTextACType
-    | UpdateNewMessageBodyACType
     | SendMessageACType
     | followACType
     | unFollowAddPostACType
@@ -14,9 +12,11 @@ export type ActionTypes = AddPostACType
     | SetUserProfileACType
     | SetUserDataACType
     | ToggleIsFollowingProgressACType
+    | SetStatusACType
 
 type AddPostACType = {
     type: 'ADD-POST'
+    newPostBody: string
 }
 type followACType = {
     type: 'FOLLOW'
@@ -30,16 +30,10 @@ type setUsersACType = {
     type: 'SET_USERS'
     users: [] | Array<UserDataItemAPIType>
 }
-type UpdateNewMessageBodyACType = {
-    type: 'UPDATE_NEW_MESSAGE_BODY'
-    body: string
-}
-type UpdateNewPostTextACType = {
-    type: 'UPDATE-NEW-POST-TEXT',
-    newText: string
-}
+
 type SendMessageACType = {
     type: 'SEND_MESSAGE'
+    newMessageBody: string
 }
 type SetCurrentPageACType = {
     type: 'SET_CURRENT_PAGE'
@@ -69,4 +63,8 @@ type SetUserDataACType = {
         email: string
         login: string
     }
+}
+type SetStatusACType = {
+    type: 'SET_STATUS'
+    status: string
 }

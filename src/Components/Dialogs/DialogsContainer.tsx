@@ -3,7 +3,8 @@ import style from './Dialogs.module.css';
 import Dialogs from "./Dialogs";
 import {connect} from 'react-redux';
 import {RootStateType} from "../../Redux/redux-store";
-import {DialogsPageType, sendMessage, updateNewMessageBody} from '../../Redux/dialog-reducer';
+import {DialogsPageType, sendMessage} from '../../Redux/dialog-reducer';
+import { compose } from 'redux';
 
 
 type MapStateToPropsType = {
@@ -12,8 +13,7 @@ type MapStateToPropsType = {
 }
 
 type MapDispatchToPropsType = {
-    sendMessage: () => void
-    updateNewMessageBody: (text: string) => void
+    sendMessage: (newMessageBody: string) => void
 }
 
 let mapStateToProps = (state: RootStateType) : MapStateToPropsType  => {
@@ -24,10 +24,8 @@ let mapStateToProps = (state: RootStateType) : MapStateToPropsType  => {
 };
 
 
-let mapDispatchToProps = {sendMessage, updateNewMessageBody};
+let mapDispatchToProps = {sendMessage};
 
-const DialogsContainer = connect<MapStateToPropsType, MapDispatchToPropsType, {}, RootStateType>(mapStateToProps, mapDispatchToProps)(Dialogs);
-
-
+const DialogsContainer = compose<React.ComponentType>(connect(mapStateToProps, mapDispatchToProps))(Dialogs)
 
 export default DialogsContainer

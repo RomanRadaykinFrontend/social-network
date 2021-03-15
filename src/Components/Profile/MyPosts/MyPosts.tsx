@@ -2,13 +2,17 @@ import React from "react";
 import cl from './MyPosts.module.css'
 import Post from "../Post/Post";
 import { PostsDataItemType } from "../../../Redux/profile-reducer";
+import {reduxForm, Field, InjectedFormProps} from "redux-form";
+import {maxLengthCreator, required } from "../../../utils/validators/validators";
+import { Textarea } from "../../Common/formsControls/FormsControls";
 
 type myPostsType = {
     postsData: Array<PostsDataItemType>
-    newPostText: string
     updateNewPostText: (text: string) => void
-    addPost: () => void
+    addPost: (newPostBody: string) => void
 }
+
+const maxLength10 = maxLengthCreator(10)
 
 
 function MyPosts(props: myPostsType) {
@@ -17,31 +21,14 @@ function MyPosts(props: myPostsType) {
                                                                               key={item.id}
                                                                               likesCount={item.likesCount}/>);
 
-    const newPostElementRef = React.createRef<HTMLTextAreaElement>();
-
-    const addPostCallback = () => {
-        if (newPostElementRef.current) {
-            props.addPost()
-        }
+    const addPostCallback = (value: AddNewPostFormReduxType) => {
+        props.addPost(value.newPostBody)
     };
-
-    let updateNewPostTextCallback = () => {
-        if (newPostElementRef.current) {
-            props.updateNewPostText(newPostElementRef.current.value)
-        }
-    };
-
 
     return (
         <div>
             <h2>My posts:</h2>
-            <div>
-                <textarea ref={newPostElementRef}
-                          onChange={updateNewPostTextCallback}
-                          value={props.newPostText}/>
-                <button onClick={addPostCallback}>Add post</button>
-                <button>Remove post</button>
-            </div>
+            <AddNewPostFormRedux onSubmit={addPostCallback}/>
             <div className={cl.posts}>
                 {postsElements}
             </div>
@@ -50,5 +37,23 @@ function MyPosts(props: myPostsType) {
     )
 }
 
+type AddNewPostFormReduxType = {
+    form: string
+    newPostBody: string
+}
+
+const AddNewPostForm = (props: InjectedFormProps<AddNewPostFormReduxType>) => {
+    return(
+        <form onSubmit={props.handleSubmit}>
+            <Field component={Textarea} name={'newPostBody'} validate={[required, maxLength10]}/>
+            <button>Add post</button>
+            <button>Remove post</button>
+        </form>
+    )
+}
+
+const AddNewPostFormRedux = reduxForm<AddNewPostFormReduxType>({
+    form: 'addNewPostForm'
+})(AddNewPostForm)
 
 export default MyPosts

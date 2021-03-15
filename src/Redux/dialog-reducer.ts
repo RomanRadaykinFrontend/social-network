@@ -1,6 +1,5 @@
 import {ActionTypes} from "./ActionTypes";
 
-const UPDATE_NEW_MESSAGE_BODY = "UPDATE_NEW_MESSAGE_BODY";
 const SEND_MESSAGE = "SEND_MESSAGE";
 
 export type DialogsDataItemType = {
@@ -16,7 +15,7 @@ export type MessagesDataItemType = {
 export type DialogsPageType = {
     dialogsData: Array<DialogsDataItemType>
     messagesData: Array<MessagesDataItemType>
-    newMessageBody: string
+    newMessageBody?: string
 }
 
 let initialState: DialogsPageType = {
@@ -35,32 +34,21 @@ let initialState: DialogsPageType = {
         {id: '4', message: 'Yo!'},
         {id: '5', message: 'Yo!'}
     ],
-    newMessageBody: ''
 }
 
 const dialogsReducer = (state: DialogsPageType = initialState, action: ActionTypes) => {
     switch (action.type) {
-        case UPDATE_NEW_MESSAGE_BODY:
-            return {
-                ...state,
-                newMessageBody: action.body
-            };
         case SEND_MESSAGE:
-            let body = state.newMessageBody;
             return {
                 ...state,
-                newMessageBody: '',
-                messagesData: [...state.messagesData, {id: '6', message: body}]
+                messagesData: [...state.messagesData, {id: '6', message: action.newMessageBody}]
             };
         default:
             return state
     }
 };
 
-export const sendMessage = (): ActionTypes => ({type: SEND_MESSAGE});
-
-export const updateNewMessageBody = (body: string): ActionTypes =>
-    ({type: UPDATE_NEW_MESSAGE_BODY, body: body});
+export const sendMessage = (newMessageBody: string): ActionTypes => ({type: SEND_MESSAGE, newMessageBody});
 
 
 export default dialogsReducer

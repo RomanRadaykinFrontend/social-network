@@ -9,9 +9,11 @@ import {
     unFollow, unFollowUser,
     UserDataItemAPIType
 } from "../../Redux/users-reducer";
-import {connect} from "react-redux";
+import {connect, useSelector} from "react-redux";
 import Users from "./Users";
 import Preloader from "../Common/Preloader/Preloader";
+import { compose } from 'redux';
+
 
 type UsersContainerPropsType = MapStateToPropsType & MapDispatchToPropsType;
 
@@ -26,6 +28,7 @@ class UsersContainer extends React.Component<UsersContainerPropsType, {}> {
     }
 
     render() {
+
         return <>
             {this.props.isFetching && <Preloader/>}
             <Users {...this.props} onPageChanged={this.onPageChanged}/>
@@ -64,6 +67,4 @@ let mapDispatchToProps = {
     getUsers, followUser, unFollowUser
 }
 
-
-
-export default connect<MapStateToPropsType, MapDispatchToPropsType, {}, RootStateType>(mapStateToProps, mapDispatchToProps)(UsersContainer)
+export default compose<React.ComponentType>(connect(mapStateToProps, mapDispatchToProps))(UsersContainer)

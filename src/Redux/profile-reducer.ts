@@ -1,10 +1,10 @@
 import {ActionTypes} from "./ActionTypes";
 import {Dispatch} from "react";
-import {userAPI} from "../api/api";
+import {profileAPI, userAPI} from "../api/api";
 
 const ADD_POST = 'ADD-POST';
-const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
 const SET_USER_PROFILE = "SET_USER_PROFILE";
+const SET_STATUS = "SET_STATUS";
 
 export type ProfileDataItemAPIType = {
     aboutMe: string
@@ -35,8 +35,9 @@ export type PostsDataItemType = {
 }
 export type ProfilePageType = {
     postsData: Array<PostsDataItemType>
-    newPostText: string
+    newPostText?: string
     profile: ProfileDataItemAPIType
+    status: string
 }
 
 let initialState: ProfilePageType = {
@@ -44,7 +45,6 @@ let initialState: ProfilePageType = {
         {id: '1', message: 'hi! how are you?', likesCount: 12},
         {id: '2', message: 'this is my first post!', likesCount: 20}
     ],
-    newPostText: '',
     profile: {
         aboutMe: '',
         contacts: {
@@ -66,7 +66,8 @@ let initialState: ProfilePageType = {
             large: '',
         },
         profileDataIsLoaded: true
-    }
+    },
+    status: ''
 }
 
 const profileReducer = (state: ProfilePageType = initialState, action: ActionTypes) => {
@@ -74,7 +75,7 @@ const profileReducer = (state: ProfilePageType = initialState, action: ActionTyp
         case ADD_POST:
             const newPost: PostsDataItemType = {
                 id: '5',
-                message: state.newPostText,
+                message: action.newPostBody,
                 likesCount: 0
             };
             return {
@@ -82,16 +83,13 @@ const profileReducer = (state: ProfilePageType = initialState, action: ActionTyp
                 postsData: [...state.postsData, newPost],
                 newPostText: ''
             }
-        case UPDATE_NEW_POST_TEXT:
-            return {
-                ...state,
-                newPostText: action.newText
-            }
         case SET_USER_PROFILE:
             return {
                 ...state,
                 profile: action.profile
             }
+        case SET_STATUS:
+            return {...state, status: action.status}
         default:
             return state
     }
@@ -99,12 +97,11 @@ const profileReducer = (state: ProfilePageType = initialState, action: ActionTyp
 
 
 //Action Creators
-export const addPost = (): ActionTypes => ({type: ADD_POST});
-
-export const updateNewPostText = (text: string): ActionTypes =>
-    ({type: UPDATE_NEW_POST_TEXT, newText: text});
+export const addPost = (newPostBody: string): ActionTypes => ({type: ADD_POST, newPostBody});
 export const setUserProfile = (profile: ProfileDataItemAPIType): ActionTypes =>
     ({type: SET_USER_PROFILE, profile: profile});
+export const setStatus = (status: string): ActionTypes =>
+    ({type: SET_STATUS, status: status});
 
 //Thunk Creators
 export const getUserProfile = (userId: string) => {
@@ -112,6 +109,26 @@ export const getUserProfile = (userId: string) => {
         userAPI.getProfile(userId)
             .then(response => {
                 dispatch(setUserProfile(response.data))
+            })
+    }
+}
+export const getStatus = (userId: string) => {
+    return (dispatch: Dispatch<ActionTypes>) => {
+        profileAPI.getStatus(userId)
+            .then(response => {
+                debugger
+                dispatch(setStatus(response.data))
+            })
+    }
+}
+
+export const updateStatus = (status: string) => {
+    return (dispatch: Dispatch<ActionTypes>) => {
+        profileAPI.updateStatus(status)
+            .then(response => {
+                if (response.data.resultCode === 0) {
+                    dispatch(setStatus(status))
+                }
             })
     }
 }
