@@ -38,17 +38,14 @@ export const setAuthUserData = (id: number | null, email: string | null, login: 
 })
 
 //Thunk creators
-export const getAuthUserData = () => {
-    return (dispatch: Dispatch<any>) => {
-        authAPI.me()
-            .then(response => {
-                if (response.data.resultCode === 0) {
-                    let {id, email, login} = response.data.data;
-                    /*dispatch(setAuthUserData(id, email, login))*/
-                    dispatch(setAuthUserData(id, email, login, true))
-                }
-            })
-    }
+export const getAuthUserData = () => (dispatch: Dispatch<any>) => {
+    return authAPI.me()
+        .then(response => {
+            if (response.data.resultCode === 0) {
+                let {id, email, login} = response.data.data;
+                dispatch(setAuthUserData(id, email, login, true))
+            }
+        })
 }
 export const loginThunk = (email: string, password: string, rememberMe: boolean) => {
     return (dispatch: Dispatch<any>) => {

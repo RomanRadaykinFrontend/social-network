@@ -5,7 +5,6 @@ import style from './Header.module.css'
 type HeaderType = {
     isAuth: boolean | null
     login: string | null
-    getAuthUserData: () => void
     logOutThunk: () => void
 }
 

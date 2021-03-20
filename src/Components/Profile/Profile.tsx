@@ -14,8 +14,6 @@ type ProfileType = {
 
 
 function Profile(props: ProfileType) {
-
-
     return (
         <div className={style.content}>
 

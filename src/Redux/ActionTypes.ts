@@ -13,6 +13,7 @@ export type ActionTypes = AddPostACType
     | SetUserDataACType
     | ToggleIsFollowingProgressACType
     | SetStatusACType
+    | SetInitializedACType
 
 type AddPostACType = {
     type: 'ADD-POST'
@@ -67,4 +68,8 @@ type SetUserDataACType = {
 type SetStatusACType = {
     type: 'SET_STATUS'
     status: string
+}
+type SetInitializedACType = {
+    type: 'SET_INITIALIZED',
+    initialized: boolean
 }

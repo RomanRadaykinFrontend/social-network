@@ -116,7 +116,6 @@ export const getStatus = (userId: string) => {
     return (dispatch: Dispatch<ActionTypes>) => {
         profileAPI.getStatus(userId)
             .then(response => {
-                debugger
                 dispatch(setStatus(response.data))
             })
     }
